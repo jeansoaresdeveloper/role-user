@@ -33,4 +33,8 @@ public class User {
         return new User(null, userDTO.name(), userDTO.role(), password);
     }
 
+    public static User fromDTOWithId(final Long id, final UserDTO userDTO, final String password) {
+        return new User(null, userDTO.name(), userDTO.role(), password);
+    }
+
 }

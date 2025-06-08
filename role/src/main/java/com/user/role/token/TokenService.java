@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class TokenService {
 
     private final String SECRET_KEY = "13132132121313213212131321321231";
-    private final Long EXPIRATION_TIME = TimeUnit.MINUTES.toMillis(15);
+    private final Long EXPIRATION_TIME = TimeUnit.MINUTES.toMillis(60);
     private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
 
