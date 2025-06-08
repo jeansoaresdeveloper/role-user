@@ -3,11 +3,14 @@ package com.user.role.user;
 import com.user.role.user.dto.UserDTO;
 import com.user.role.user.dto.UserLoginDTO;
 import com.user.role.utils.Password;
-import jakarta.validation.Valid;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 @RequiredArgsConstructor
 public class UserService {
 
@@ -22,7 +25,13 @@ public class UserService {
         return repository.save(User.fromDTO(user, password));
     }
 
-    public void auth(final UserLoginDTO user) {
+    public User isValid(final UserLoginDTO user) {
 
+        final User userFound = repository.findByName(user.name())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        return Password.matches(user.password(), userFound.getPassword())
+                ? userFound
+                : null;
     }
 }
